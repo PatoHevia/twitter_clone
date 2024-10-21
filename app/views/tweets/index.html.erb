@@ -1,0 +1,31 @@
+<h1 class="text-center mb-5">Tweets Recientes</h1>
+
+<div class="row mb-4">
+  <div class="col-md-6">
+    <%= form_with url: tweets_path, method: :get, local: true do |form| %>
+      <div class="input-group">
+        <%= form.text_field :query, value: params[:query], class: "form-control", placeholder: "Buscar tweets..." %>
+        <button class="btn btn-primary" type="submit">
+          <i class="fas fa-search"></i> Buscar
+        </button>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="list-group">
+  <% @tweets.each do |tweet| %>
+    <div class="list-group-item list-group-item-action">
+      <h5 class="mb-1"><i class="fas fa-user"></i> <%= tweet.user_name %></h5>
+      <p class="mb-1"><i class="fas fa-comment"></i> <%= tweet.description %></p>
+      <small class="text-muted">
+        <%= link_to 'Editar', edit_tweet_path(tweet), class: "btn btn-sm btn-warning" %>
+        <%= link_to 'Eliminar', tweet, method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn btn-sm btn-danger" %>
+      </small>
+    </div>
+  <% end %>
+</div>
+
+<div class="mt-4 d-flex justify-content-center">
+  <%= paginate @tweets %>
+</div>
